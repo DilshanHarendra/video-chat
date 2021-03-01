@@ -50,7 +50,7 @@ const Room = (props) => {
 
     useEffect(() => {
         if (device!==''){
-            socketRef.current = io.connect("/");
+            socketRef.current = io.connect(process.env.REACT_APP_API_BASEURL);
             let userMedia=navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: true, })
             if (screen){
                 var displayMediaOptions={
