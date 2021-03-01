@@ -5,10 +5,17 @@ const app = express();
 const server = http.createServer(app);
 const socket = require("socket.io");
 const io = socket(server);
+const fallback = require('express-history-api-fallback')
 
 const users = {};
 
 const socketToRoom = {};
+
+const root = `${__dirname}/build`
+app.use(express.static(root))
+app.use(fallback('index.html', { root }))
+
+
 
 io.on('connection', socket => {
     socket.on("join-room", roomID => {
@@ -48,6 +55,11 @@ io.on('connection', socket => {
     });
 
 });
+
+
+
+
+
 
 server.listen(process.env.PORT || 8000, () => console.log('server is running on port 8000'));
 
